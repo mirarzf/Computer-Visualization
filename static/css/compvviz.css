@@ -41,12 +41,12 @@ div.clear ::-webkit-scrollbar {
     background-color: #FFF5E4; /* couleur de fond */
   } 
   /* Fin Scrollbar */ 
-   
+  
+  /* Onglets histogrammes */ 
   .mon_onglet {
     display: inline-block;
-    width: 90px; 
     text-align: center;
-    padding: 5px;
+    padding: 5px 10px;
     margin: 4px;
     font-family: 'Lobster', cursive;
     color: #FFBE4F;
@@ -59,18 +59,17 @@ div.clear ::-webkit-scrollbar {
   .mon_onglet_selected {
     display: inline-block; 
     text-align: center;
-    width: 90px; 
-    padding: 5px;
+    padding: 5px 10px; 
     margin: 4px;
     font-family: 'Lobster', cursive;
-    color: #FFBE4F;
+    color: #FFFFA6;
     border: solid 1px #FFBE4F; 
     border-left: solid 3px #FFBE4F;   
     border-right: solid 3px #FFBE4F; 
     border-radius: 15px; 
-    background: #FFFFA6; 
+    background: #FFBE4F; 
   }
-  .clear{
+  .clear {
     clear: both;
   }
   .mon_contenu {
@@ -83,17 +82,24 @@ div.clear ::-webkit-scrollbar {
     padding: 10px;
     margin: 10 px;
     height: 200px;
-    width: 500px;
     overflow: auto; 
     background: #FFFFA6; 
   }
   .mon_contenu img {
     width: 90%; 
   }
-  #mes_contenus, #mes_onglets{
+  #mes_contenus, #mes_onglets {
     height: 100%;
-    width:100%;
+    width: 100%;
+    /* border: 2px #f8e solid;  */
   }
-  table {
+  #mes_onglets {
+    display: flex;                  /* establish flex container */
+    flex-direction: row;            /* default value; can be omitted */
+    flex-wrap: nowrap;              /* default value; can be omitted */
+    justify-content: flex-start;
+  }
+  div.histograms {
     width: 650px; 
   }
+  /* Fin onglets histogrammes */ 

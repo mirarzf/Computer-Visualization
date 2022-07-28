@@ -13,40 +13,36 @@
 </head>
 
 <body>
-  <title>Hello from Flask</title>
+  <title>UnweaveNet data visualization</title>
   {% if name %}
     <h1>Hello {{ name }}!</h1>
   {% else %}
     <h1>Hello, World!</h1>
   {% endif %}
-  <table>
-    <tbody>
-      <tr>
-          <td>
-            <div id="mes_onglets"><center>
-                <span onmouseover="changeOnglet(this);" class="mon_onglet_selected" id="o_1">Moi </span> 
-                <span onmouseover="changeOnglet(this);" class="mon_onglet" id="o_2">Mes cadeaux </span> 
-                <span onmouseover="changeOnglet(this);" class="mon_onglet" id="o_3">Signature</span> 
-  </center></div>
-  </td></tr>
-          <tr><td>
-              
-            <div class="clear">
-                <div id="mes_contenus"><center>
-                    
-                  <div class="mon_contenu" id="co_1">
-  Onglet 1
-                  </div>
-                    
-                  <div style="display: none;" class="mon_contenu" id="co_2">
-                      Onglet 2
-                  </div>
-                  <div style="display: none;" class="mon_contenu" id="co_3">Onglet 3
+  <div class="histograms">
+    <div id="mes_onglets">
+      <span onclick="changeOnglet(this);" class="mon_onglet_selected" id="o_1">Complete dataset </span> 
+      <span onclick="changeOnglet(this);" class="mon_onglet" id="o_2">Train </span> 
+      <span onclick="changeOnglet(this);" class="mon_onglet" id="o_3">Validation</span> 
+      <span onclick="changeOnglet(this);" class="mon_onglet" id="o_4">Test</span> 
+    </div>        
+    <div class="clear">
+      <div id="mes_contenus">
+        <div class="mon_contenu" id="co_1">
+          Onglet 1
+        </div>
+
+        <div style="display: none;" class="mon_contenu" id="co_2">
+          Onglet 2
+        </div>
+
+        <div style="display: none;" class="mon_contenu" id="co_3">
+          Onglet 3
+        </div>
+        
+        <div style="display: none;" class="mon_contenu" id="co_4">
+          Onglet 4
+        </div>
+      </div>
   </div>
-  </center></div>
-            </div>
-          </td>
-      </tr>
-    </tbody>
-  </table>
 </body>
