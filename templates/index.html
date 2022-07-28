@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  
+  <!-- CSS File -->
+  <link href="/static/css/compvviz.css" rel="stylesheet" />
+  <!-- Font -->
+  <link href='http://fonts.googleapis.com/css?family=Lobster' rel='stylesheet' type='text/css'>
+  
+  <!-- JS File -->
+  <script src="/static/js/onglet.js"></script>
+</head>
+
+<body>
+  <title>Hello from Flask</title>
+  {% if name %}
+    <h1>Hello {{ name }}!</h1>
+  {% else %}
+    <h1>Hello, World!</h1>
+  {% endif %}
+  <table>
+    <tbody>
+      <tr>
+          <td>
+            <div id="mes_onglets"><center>
+                <span onmouseover="changeOnglet(this);" class="mon_onglet_selected" id="o_1">Moi </span> 
+                <span onmouseover="changeOnglet(this);" class="mon_onglet" id="o_2">Mes cadeaux </span> 
+                <span onmouseover="changeOnglet(this);" class="mon_onglet" id="o_3">Signature</span> 
+  </center></div>
+  </td></tr>
+          <tr><td>
+              
+            <div class="clear">
+                <div id="mes_contenus"><center>
+                    
+                  <div class="mon_contenu" id="co_1">
+  Onglet 1
+                  </div>
+                    
+                  <div style="display: none;" class="mon_contenu" id="co_2">
+                      Onglet 2
+                  </div>
+                  <div style="display: none;" class="mon_contenu" id="co_3">Onglet 3
+  </div>
+  </center></div>
+            </div>
+          </td>
+      </tr>
+    </tbody>
+  </table>
+</body>

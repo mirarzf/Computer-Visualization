@@ -8,29 +8,6 @@ datafile = "stories.pkl"
 df = pd.read_pickle(os.path.join("./data", datafile)) 
 
 
-# print(df.iloc[2]["video_id"])
-
-firstviddata = df.loc[df["video_id"] == "P35_104" ]
-# print(firstviddata)
-
-n = len(firstviddata)
-# There are always 10 clips per story 
-# The clips are then divided between the different 
-# for i in range(n): 
-#     print(i)
-#     # print("nb of clips", firstviddata.iloc[i]["thread_clip_idxs"])
-#     print("nb of threads", len(firstviddata.iloc[i]["clip_frame_idxs"]))
-#     print("nb of threads", firstviddata.iloc[i]["clip_frame_idxs"])
-
-# print(firstviddata.iloc[4]["clip_frame_idxs"][0].shape)
-# print(firstviddata.iloc[4]["clip_frame_idxs"][1].shape)
-# print(firstviddata.iloc[4]["clip_frame_idxs"][2].shape)
-# for i in range(3): 
-#     print("clip #{}".format(i), firstviddata.iloc[4]["clip_frame_idxs"][i])
-
-
-# print(firstviddata["video_id"])
-
 ## GET THE NUMBER OF THREADS PER STORY 
 df["nb_of_threads"] = [len(row["clip_frame_idxs"]) for idx, row in df.iterrows()]
 # print(threads_per_story.head())
