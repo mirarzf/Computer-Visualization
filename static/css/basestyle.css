@@ -3,6 +3,8 @@ body {
   background-color: aliceblue;
 }
 
+/* Barre de navigation */
+
 div#navbar { 
   border: 2px solid #9c00aa; 
   display: flex; 
@@ -21,6 +23,16 @@ nav a {
 
   font-family: 'Lobster', cursive;
   text-decoration: none;
+}
+/* Fin barre de navigation */
+
+.content { 
+  display: flex; 
+  justify-content: space-between;
+}
+
+.content > div { 
+  display: flexbox; 
 }
 
 /* Scrollbar */ 

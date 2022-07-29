@@ -51,9 +51,13 @@ def func(pct, allvalues):
     return "{:.1f}%\n({:d} stories)".format(pct, absolute)
 
 def pie_chart(): 
-    fig = Figure()
+    fig = Figure(figsize=(4,4))
+    ax = fig.subplots(nrows = 1, ncols = 1)
+    n_train = len( df[ df["split"] == "train" ] )
+    n_val = len( df[ df["split"] == "val" ] )
+    n_test = len( df[ df["split"] == "test" ] )
     ns = [n_train, n_val, n_test]
-    plt.pie(ns, labels = ["train", "validation", "test"], autopct = lambda pct: func(pct, ns))
+    ax.pie(ns, labels = ["train", "validation", "test"], autopct = lambda pct: func(pct, ns))
     return fig 
 
 # plt.show()

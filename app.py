@@ -5,7 +5,7 @@ from flask import Response
 from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
 from matplotlib.figure import Figure
 
-from main import histo_split, show_stories_from_video, show_timeline
+from main import pie_chart, histo_split, show_stories_from_video, show_timeline
 
 app = Flask(__name__)
 
@@ -29,14 +29,13 @@ def rendersplitlink(split):
         return render_template("splitdataset.html", 
                                 split = split)
 
-
-
-
-
-
-
-
-
+""" PLOT FOR COMPLETE DATASET PAGE """
+@app.route('/plot_pie_chart.png')
+def plot_pie_chart(): 
+    fig = pie_chart()
+    output = io.BytesIO()
+    FigureCanvas(fig).print_png(output)
+    return Response(output.getvalue(), mimetype='image/png')
 
 @app.route('/plot_histo_<split>.png')
 def plot_histo(split):
