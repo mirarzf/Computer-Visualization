@@ -1,0 +1,34 @@
+{% extends 'baselayout.html' %}
+
+{% block additional_css %}
+<link href="/static/css/completedataset.css" rel="stylesheet" />
+{% endblock %}
+
+{% block content %}
+  <div class="histograms">
+    <div>
+      <div>
+        <span>Total</span>
+        <br />
+        <img src="/plot_histo_total.png" alt="complete dataset histogram">
+      </div>
+      <div>
+        <span>Train</span>
+        <br />
+        <img src="/plot_histo_train.png" alt="train data histogram">
+      </div>
+    </div>
+    <div>
+      <div>
+        <span>Validation</span>
+        <br />
+        <img src="/plot_histo_val.png" alt="validation data histogram">
+      </div>
+      <div>
+        <span>Test </span>
+        <br />
+        <img src="/plot_histo_test.png" alt="test data histogram">
+      </div>
+    </div>
+  </div>
+{% endblock %}

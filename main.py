@@ -3,6 +3,7 @@ from types import new_class
 import pandas as pd
 import numpy as np 
 import matplotlib.pyplot as plt 
+from matplotlib.figure import Figure
 
 datafile = "stories.pkl"
 df = pd.read_pickle(os.path.join("./data", datafile)) 
@@ -14,24 +15,25 @@ df["nb_of_threads"] = [len(row["clip_frame_idxs"]) for idx, row in df.iterrows()
 
 
 ## SHOW THE TIMELINE OF ONE STORY 
-# n = len(df)
-# fig = plt.figure() 
-# nrows = 15
-# print(n)
-# ax = fig.subplots(nrows = nrows, ncols = 1)
-# for i in range(nrows): #n 
-#     xranges = [] 
-#     facecolors = []
-#     for j in range(df.iloc[i]["nb_of_threads"]): 
-#         clips = df.iloc[i]["clip_frame_idxs"][j]
-#         # new_xrange = [(clip[0], clip[-1]-clip[0]) for clip in clips]
-#         new_xrange = [(clips[0][0], clips[-1][-1]-clips[0][0])]
-#         xranges += new_xrange
-#         color = np.random.rand(1, 3)
-#         facecolors += [color] * len(new_xrange)
-#     ax[i].broken_barh(xranges, (0, 10), facecolors = tuple(facecolors)) 
-#     ax[i].set_yticks([5], labels = [df.iloc[i]["video_id"]])
-#     ax[i].set_xticks([], labels = [])
+def show_first_stories(): 
+    n = len(df)
+    fig = plt.figure() 
+    nrows = 15
+    print(n)
+    ax = fig.subplots(nrows = nrows, ncols = 1)
+    for i in range(nrows): #n 
+        xranges = [] 
+        facecolors = []
+        for j in range(df.iloc[i]["nb_of_threads"]): 
+            clips = df.iloc[i]["clip_frame_idxs"][j]
+            new_xrange = [(clip[0], clip[-1]-clip[0]) for clip in clips]
+            # new_xrange = [(clips[0][0], clips[-1][-1]-clips[0][0])]
+            xranges += new_xrange
+            color = np.random.rand(1, 3)
+            facecolors += [color] * len(new_xrange)
+        ax[i].broken_barh(xranges, (0, 10), facecolors = tuple(facecolors)) 
+        ax[i].set_yticks([5], labels = [df.iloc[i]["video_id"]])
+        ax[i].set_xticks([], labels = [])
     
 # plt.show()
 
@@ -48,26 +50,39 @@ def func(pct, allvalues):
     absolute = int(pct / 100.*np.sum(allvalues))
     return "{:.1f}%\n({:d} stories)".format(pct, absolute)
 
-fig = plt.figure()
-ns = [n_train, n_val, n_test]
-plt.pie(ns, labels = ["train", "validation", "test"], autopct = lambda pct: func(pct, ns))
+def pie_chart(): 
+    fig = Figure()
+    ns = [n_train, n_val, n_test]
+    plt.pie(ns, labels = ["train", "validation", "test"], autopct = lambda pct: func(pct, ns))
+    return fig 
 
 # plt.show()
 
 # Second: Histogram showing the distribution of number of threads per story in each split
-splits = ["train", "val", "test"]
-fig = plt.figure()
-fig.set_tight_layout(True)
-ax = fig.subplots(nrows = len(splits)+1, ncols = 1)
-for i in range(len(splits)): 
-    split = splits[i]
-    current_ax = ax[i]
-    df[df["split"] == split].hist(column=["nb_of_threads"], ax = current_ax, grid = False)
-    ax[i].set_title(split)
+# splits = ["train", "val", "test"]
+# fig = plt.figure()
+# fig.set_tight_layout(True)
+# ax = fig.subplots(nrows = len(splits)+1, ncols = 1)
+# for i in range(len(splits)): 
+#     split = splits[i]
+#     current_ax = ax[i]
+#     df[df["split"] == split].hist(column=["nb_of_threads"], ax = current_ax, grid = False)
+#     ax[i].set_title(split)
 
-current_ax = ax[-1]
-df.hist(column=["nb_of_threads"], ax = current_ax, grid = False)
-current_ax.set_title("Complete dataset")
+# current_ax = ax[-1]
+# df.hist(column=["nb_of_threads"], ax = current_ax, grid = False)
+# current_ax.set_title("Complete dataset")
+
+def histo_split(split = "total"): 
+    fig = Figure()
+    ax = fig.subplots(nrows = 1, ncols = 1)
+    # split = splits[i]
+    if split == "total": 
+        df.hist(column=["nb_of_threads"], ax = ax, grid = False)
+    else: 
+        df[df["split"] == split].hist(column=["nb_of_threads"], ax = ax, grid = False)
+    ax.set_title("")
+    return fig 
 
 # plt.show()
 
@@ -92,7 +107,8 @@ for video in df_video_gps:
         #     splits[video] = row["split"]
         for j in range(row["nb_of_threads"]): 
             clips = row["clip_frame_idxs"][j]
-            new_xrange = [(clips[0][0], clips[-1][-1]-clips[0][0])]
+            new_xrange = [(clip[0], clip[-1]-clip[0]) for clip in clips]
+            # new_xrange = [(clips[0][0], clips[-1][-1]-clips[0][0])]
             story += new_xrange
             color = np.random.rand(1, 3)
             threadcolors += [color] * len(new_xrange)
@@ -106,16 +122,47 @@ df_stories["story"] = stories
 df_stories["facecolors"] = facecolors 
 
 
-print("Input here the index: ")
-video_name = input()
-datarow = df_stories.loc[df_stories["video_id"] == video_name]
-story = datarow["story"].iloc[0]
-print(story)
-fig = plt.figure(figsize=(5,1.5)) 
-ax = fig.subplots(nrows = 1, ncols = 1)
-ax.broken_barh(story, (0, 2), facecolors = tuple(df_stories["facecolors"].iloc[0])) 
-ax.set_yticks([1], labels = [datarow["video_id"].iloc[0]])
-ax.set_ylim(0, 2)
+def show_stories_from_video(video_name = None): 
+    if video_name == None: 
+        video_name = "P01_09"
     
-plt.show()
+    datarow = df_stories.loc[df_stories["video_id"] == video_name]
+    story = datarow["story"].iloc[0]
+    print(len(story))
 
+    fig = plt.figure(figsize=(5,2))
+    ax = fig.subplots(nrows = 1, ncols = 1)
+    ax.broken_barh(story, (0, 2), facecolors = tuple(df_stories["facecolors"].iloc[0])) 
+    ax.set_yticks([1], labels = [datarow["video_id"].iloc[0]])
+    ax.set_ylim(0, 2)
+    
+    # plt.show()
+    plt.savefig(os.path.join("static", "plot_timeline_videoidselected.png"))
+    return fig 
+    
+show_stories_from_video("P37_102")
+# plt.show()
+
+def show_timeline(story_id = None): 
+    fig = Figure(figsize = (5,2)) 
+    ax = fig.add_subplot(1,1,1)
+    if story_id == None: 
+        row = df.iloc[0]
+    else: 
+        row = df.loc[df["story_id"] == story_id]        
+    xranges = [] 
+    facecolors = []
+    for j in range(row["nb_of_threads"]): 
+        clips = row["clip_frame_idxs"][j]
+        new_xrange = [(clip[0], clip[-1]-clip[0]) for clip in clips]
+        # new_xrange = [(clips[0][0], clips[-1][-1]-clips[0][0])]
+        xranges += new_xrange
+        color = np.random.rand(1, 3)
+        facecolors += [color] * len(new_xrange)
+    # plt.broken_barh(xranges, (0, 10), facecolors = tuple(facecolors)) 
+    # plt.set_yticks([5], labels = [df.iloc[i]["video_id"]])
+    # plt.set_xticks([], labels = []) 
+    ax.broken_barh(xranges, (0, 10), facecolors = tuple(facecolors)) 
+    ax.set_yticks([5], labels = [row["video_id"]])
+    ax.set_xticks([], labels = []) 
+    return fig 

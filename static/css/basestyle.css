@@ -1,3 +1,28 @@
+/* General page style */
+body { 
+  background-color: aliceblue;
+}
+
+div#navbar { 
+  border: 2px solid #9c00aa; 
+  display: flex; 
+  flex-direction: row;
+  /* justify-content: space-evenly; */
+  border-radius: 10px; 
+  padding: 5px 20px; 
+}
+
+nav a { 
+  border: 2px solid #400779; 
+  display: flex; 
+
+  margin: 5px; 
+  padding: 5px;
+
+  font-family: 'Lobster', cursive;
+  text-decoration: none;
+}
+
 /* Scrollbar */ 
 div.clear ::-webkit-scrollbar {
     height: 3px; 
@@ -42,19 +67,19 @@ div.clear ::-webkit-scrollbar {
   } 
   /* Fin Scrollbar */ 
   
-  /* Onglets histogrammes */ 
+  /* Onglets */ 
   .mon_onglet {
     display: inline-block;
     text-align: center;
     padding: 5px 10px;
     margin: 4px;
     font-family: 'Lobster', cursive;
-    color: #FFBE4F;
-    border: solid 1px #FFBE4F; 
-    border-left: solid 3px #FFBE4F;   
-    border-right: solid 3px #FFBE4F; 
+    color: navy;
+    border: solid 1px navy; 
+    border-left: solid 3px navy;   
+    border-right: solid 3px navy; 
     border-radius: 15px; 
-    background: #FFFFA6; 
+    background: #fff; 
   }
   .mon_onglet_selected {
     display: inline-block; 
@@ -62,28 +87,28 @@ div.clear ::-webkit-scrollbar {
     padding: 5px 10px; 
     margin: 4px;
     font-family: 'Lobster', cursive;
-    color: #FFFFA6;
-    border: solid 1px #FFBE4F; 
-    border-left: solid 3px #FFBE4F;   
-    border-right: solid 3px #FFBE4F; 
+    color: #fff;
+    border: solid 1px navy; 
+    border-left: solid 3px navy;   
+    border-right: solid 3px navy; 
     border-radius: 15px; 
-    background: #FFBE4F; 
+    background: navy; 
   }
   .clear {
     clear: both;
   }
   .mon_contenu {
     text-align: center; 
-    border: solid 1px #FFBE4F; 
-    border-left: solid 5px #FFBE4F;   
-    border-right: solid 5px #FFBE4F; 
+    border: solid 1px navy; 
+    border-left: solid 5px navy;   
+    border-right: solid 5px navy; 
     border-radius: 20px; 
-    color: #FFBE4F;
+    color: navy;
     padding: 10px;
     margin: 10 px;
-    height: 200px;
+    /* height: 500px; */
     overflow: auto; 
-    background: #FFFFA6; 
+    background: #fff; 
   }
   .mon_contenu img {
     width: 90%; 
@@ -99,7 +124,4 @@ div.clear ::-webkit-scrollbar {
     flex-wrap: nowrap;              /* default value; can be omitted */
     justify-content: flex-start;
   }
-  div.histograms {
-    width: 650px; 
-  }
-  /* Fin onglets histogrammes */ 
+  /* Fin onglets */ 
