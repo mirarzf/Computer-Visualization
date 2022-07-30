@@ -18,7 +18,6 @@ def show_first_stories():
     n = len(df)
     fig = plt.figure() 
     nrows = 15
-    print(n)
     ax = fig.subplots(nrows = nrows, ncols = 1)
     for i in range(nrows): #n 
         xranges = [] 
@@ -40,7 +39,6 @@ def show_first_stories():
 n_train = len( df[ df["split"] == "train" ] )
 n_val = len( df[ df["split"] == "val" ] )
 n_test = len( df[ df["split"] == "test" ] )
-print(n_train, n_val, n_test)
 
 
 def func(pct, allvalues):
