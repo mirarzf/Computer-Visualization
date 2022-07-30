@@ -4,7 +4,7 @@ This dashboard was created for the final report of Advanced Course in Computer V
 
 --- 
 
-The dashboard was created using Python, Flask and the matplotlib library. 
+The dashboard was created using Python, Flask, pandas and matplotlib libraries. 
 To make it work, download the pickled data from the [activity stories repository](https://github.com/willprice/activity-stories) and put it in a folder "data", that you create at the root of this repository. 
 You can then run the app by running 
 ```
