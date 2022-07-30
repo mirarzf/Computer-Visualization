@@ -11,7 +11,6 @@ df = pd.read_pickle(os.path.join("./data", datafile))
 
 ## GET THE NUMBER OF THREADS PER STORY 
 df["nb_of_threads"] = [len(row["clip_frame_idxs"]) for idx, row in df.iterrows()]
-# print(threads_per_story.head())
 
 
 ## SHOW THE TIMELINE OF ONE STORY 
@@ -34,8 +33,6 @@ def show_first_stories():
         ax[i].broken_barh(xranges, (0, 10), facecolors = tuple(facecolors)) 
         ax[i].set_yticks([5], labels = [df.iloc[i]["video_id"]])
         ax[i].set_xticks([], labels = [])
-    
-# plt.show()
 
 ## HISTOGRAMS OF THE DIFFERENT SPLITS 
 
@@ -59,8 +56,6 @@ def pie_chart():
     ns = [n_train, n_val, n_test]
     ax.pie(ns, labels = ["train", "validation", "test"], autopct = lambda pct: func(pct, ns))
     return fig 
-
-# plt.show()
 
 # Second: Histogram showing the distribution of number of threads per story in each split
 
@@ -107,13 +102,6 @@ def histo_split_stacked():
     ax.legend(loc="best")
     return fig 
 
-# histo_split()
-# histo_split('train')
-# histo_split('val')
-# histo_split('test')
-# histo_split_stacked()
-# plt.show()
-
 ## TIMELINE PER VIDEO 
 # First: Get all the stories for each video 
 df_video_gps = df.groupby(by = ["video_id"]).groups
@@ -122,21 +110,13 @@ stories = []
 facecolors = []
 video_names = [] 
 counter = 0 
-# splits = {} 
 for video in df_video_gps: 
     story = [] 
     threadcolors = []
     for ind, row in df[df["video_id"] == video].iterrows(): 
-        # if video in splits.keys() and splits[video] != row["split"]: 
-        #     print("AIE")
-        #     print(row["split"], splits[video])
-        #     break
-        # else: 
-        #     splits[video] = row["split"]
         for j in range(row["nb_of_threads"]): 
             clips = row["clip_frame_idxs"][j]
             new_xrange = [(clip[0], clip[-1]-clip[0]) for clip in clips]
-            # new_xrange = [(clips[0][0], clips[-1][-1]-clips[0][0])]
             story += new_xrange
             color = np.random.rand(1, 3)
             threadcolors += [color] * len(new_xrange)
@@ -154,11 +134,12 @@ def show_stories_from_video(video_name = "P01_09"):
     datarow = df_stories.loc[df_stories["video_id"] == video_name]
     story = datarow["story"].iloc[0]
 
-    fig = plt.Figure()
+    fig = Figure(figsize = (10,1), layout='tight') 
     ax = fig.subplots(nrows = 1, ncols = 1)
     ax.broken_barh(story, (0, 2), facecolors = tuple(df_stories["facecolors"].iloc[0])) 
-    ax.set_yticks([1], labels = [datarow["video_id"].iloc[0]])
+    ax.set_yticks([], labels = [])
     ax.set_ylim(0, 2)
+    ax.set_xlim(left = 0)
     
     return fig 
 
@@ -170,12 +151,8 @@ def individual_info_from_video(video_name = "P01_09"):
     nb_of_threads = len(story)
     return nb_of_stories, nb_of_threads
 
-# show_stories_from_video()
-# plt.show()
-
-
 def show_timeline(story_id = None): 
-    fig = Figure(figsize = (5,2)) 
+    fig = Figure(figsize = (5,1)) 
     ax = fig.add_subplot(1,1,1)
     if story_id == None: 
         row = df.iloc[0]

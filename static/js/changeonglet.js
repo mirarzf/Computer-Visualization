@@ -14,12 +14,3 @@ function changeOnglet(_this){
         }
     }   
 }
-
-// Select list 
-function showSelectedIndex(_this){ 
-    var sb = document.getElementById('select_list'); 
-    // show the selected index
-    // if (sb.selectedIndex != 0){
-    //     alert(sb.selectedIndex-1);
-    // }
-}

@@ -9,11 +9,6 @@ from main import pie_chart, histo_split, histo_split_stacked, show_stories_from_
 
 app = Flask(__name__)
 
-# @app.route("/", methods=['GET', 'POST'])
-# def selected_list(split): 
-#     optionslist = 
-selected_list = ["P37_102", "P01_09"]
-
 @app.route("/", methods=['GET', 'POST'])
 def main():
 	return render_template("completedataset.html") 
@@ -69,9 +64,12 @@ def showSelectedVideo(split):
     else: 
       video_id_selected = request.form['video_id_sl']
 
-    return redirect(url_for('rendersplitlinkwithvideo', 
-                            split = split, 
-                            selected_video = video_id_selected))
+    if video_id_selected == 'Choose the video ID': 
+        return ('', 204)
+    else: 
+        return redirect(url_for('rendersplitlinkwithvideo', 
+                                split = split, 
+                                selected_video = video_id_selected))
 
 @app.route('/plot_timeline_<selectedvideo>.png')
 def plot_stories(selectedvideo):

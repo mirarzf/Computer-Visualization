@@ -1,38 +1,67 @@
 /* General page style */
 body { 
-  background-color: aliceblue;
+  background-color: #888888;
+  color: #999999; 
+  font-family: 'Oswald', sans-serif;
+  font-weight: 300;
+}
+
+h1 { 
+  padding: 2px; 
+  margin: 0px; 
+
+  color: #ffffff; 
+  font-family: 'Oswald', sans-serif;
+  font-weight: 700;
+
+  font-variant: small-caps;
+  font-size: 40px; 
 }
 
 /* Barre de navigation */
 
-div#navbar { 
-  border: 2px solid #9c00aa; 
+div#navbar, section.content { 
   display: flex; 
   flex-direction: row;
-  /* justify-content: space-evenly; */
-  border-radius: 10px; 
   padding: 5px 20px; 
+  margin: 10px 0;
+  
+  border-radius: 10px; 
+  /* border: 1px solid #a4a1a1;  */
+  box-shadow: 0px 0px 4px #bbbbbb;
+
+  background-color: #bbbbbb;
 }
 
 nav a { 
-  border: 2px solid #400779; 
   display: flex; 
 
   margin: 5px; 
-  padding: 5px;
+  padding: 5px 10px;
 
-  font-family: 'Lobster', cursive;
+  font-family: 'Oswald', sans-serif;
+  font-weight: 300;
   text-decoration: none;
+  
+  color: #fff; 
+  text-align: center;
+
+  border-radius: 15px; 
+  background-color: #cbcbcb;
+}
+
+nav a:hover { 
+  letter-spacing: 2px;
+  transition: all ease 1s; 
+  -moz-transition: all ease 1s; 
+  -webkit-transition: all ease 1s; 
+  -ms-transition: all ease 1s; 
+  -o-transition: all ease 1s; 
 }
 /* Fin barre de navigation */
 
 .content { 
   display: flex; 
-  justify-content: space-between;
-}
-
-.content > div { 
-  display: flexbox; 
 }
 
 /* Scrollbar */ 
@@ -77,63 +106,12 @@ div.clear ::-webkit-scrollbar {
   div.clear ::-o-scrollbar-track-piece {
     background-color: #FFF5E4; /* couleur de fond */
   } 
-  /* Fin Scrollbar */ 
-  
-  /* Onglets */ 
-  .mon_onglet {
-    display: inline-block;
-    text-align: center;
-    padding: 5px 10px;
-    margin: 4px;
-    font-family: 'Lobster', cursive;
-    color: navy;
-    border: solid 1px navy; 
-    border-left: solid 3px navy;   
-    border-right: solid 3px navy; 
-    border-radius: 15px; 
-    background: #fff; 
-  }
-  .mon_onglet_selected {
-    display: inline-block; 
-    text-align: center;
-    padding: 5px 10px; 
-    margin: 4px;
-    font-family: 'Lobster', cursive;
-    color: #fff;
-    border: solid 1px navy; 
-    border-left: solid 3px navy;   
-    border-right: solid 3px navy; 
-    border-radius: 15px; 
-    background: navy; 
-  }
-  .clear {
-    clear: both;
-  }
-  .mon_contenu {
-    text-align: center; 
-    border: solid 1px navy; 
-    border-left: solid 5px navy;   
-    border-right: solid 5px navy; 
-    border-radius: 20px; 
-    color: navy;
-    padding: 10px;
-    margin: 10 px;
-    /* height: 500px; */
-    overflow: auto; 
-    background: #fff; 
-  }
-  .mon_contenu img {
-    width: 90%; 
-  }
-  #mes_contenus, #mes_onglets {
-    height: 100%;
-    width: 100%;
-    /* border: 2px #f8e solid;  */
-  }
-  #mes_onglets {
-    display: flex;                  /* establish flex container */
-    flex-direction: row;            /* default value; can be omitted */
-    flex-wrap: nowrap;              /* default value; can be omitted */
-    justify-content: flex-start;
-  }
-  /* Fin onglets */ 
+/* Fin Scrollbar */ 
+
+/* Personnalization "titre" */
+.titre { 
+  font-family: 'Oswald', sans-serif;
+  font-weight: 500;
+  font-size: 24px;  
+  color: #888888; 
+}

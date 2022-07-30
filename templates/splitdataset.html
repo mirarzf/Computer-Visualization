@@ -5,38 +5,41 @@
 {% endblock %}
 
 {% block content %}
-<div class="selectlist">
-  <p class="split_info">
-    Number of videos in the split: {{ video_ids_list|length }} <br /> 
-  </p>
-  <div>    
+<div class="info_split">
+  <div id="histogram">
+    <span class="titre">Repartition of number of threads per story in the split {{split}}</span>
+    <br />
     <img src="/plot_histo_{{ split }}.png" alt="{{ split }} data histogram" />
   </div>
-  <form action = "/{{split}}/selected_video_story" method ="post" id="sl_timeline_form"> 
-    <select name="video_id_sl" width="300px" id="select_list">
-      <option DISABLED SELECTED>Choose the video ID</option>
-      {% for video_id in video_ids_list %}
-      <option value="{{ video_id }}">{{ video_id }}</option>
-      {% endfor %}
-    </select>
-    <button onclick="showSelectedIndex(this)" id="select_btn">Get the Selected Index</button>
-  </form>
+  <p class="info_para">
+    Number of videos in the split: {{ video_ids_list|length }} <br /> 
+  </p>
+  <div class="select_list">
+    <form action = "/{{split}}/selected_video_story" method ="post" id="sl_timeline_form"> 
+      <select name="video_id_sl" width="300px" id="select_list">
+        <option DISABLED>Choose the video ID</option>
+        {% for video_id in video_ids_list %}
+        <option value="{{ video_id }}">{{ video_id }}</option>
+        {% endfor %}
+      </select>
+      <button onclick="showSelectedIndex(this)" id="select_btn">Get the timeline of selected video ID</button>
+    </form>
+  </div>
 </div>
-<div class="video_info">
+<div class="info_video">
   {% if selected_video %}
   <div class="display_timeline">
-    <span class="titre">{{selected_video}}</span>
+    <span class="titre">Annotated frames of {{selected_video}}</span>
     <br />
     <img src="/plot_timeline_{{ selected_video }}.png" alt="Timeline of annotated data of {{selected_video}}" />
   </div>
-  <div class="individual_info">
-    <p>
-      Video id: {{ selected_video }} <br /> 
-      Number of stories: {{ nb_of_stories }} <br /> 
-      Number of different threads: {{ nb_of_threads }} <br /> 
-      Split: {{ split }} <br /> 
-    </p>
-  </div>
+  <p class="info_individual">
+    *Each colored band corresponds to an annotated clip. <br /> 
+    Video id: {{ selected_video }} <br /> 
+    Number of stories: {{ nb_of_stories }} <br /> 
+    Number of different threads: {{ nb_of_threads }} <br /> 
+    Split: {{ split }} <br /> 
+  </p>
   {% endif %}
 </div>
 {% endblock %}

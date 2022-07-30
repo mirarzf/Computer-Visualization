@@ -4,6 +4,10 @@
 <link href="/static/css/completedataset.css" rel="stylesheet" />
 {% endblock %}
 
+{% block additional_js %}
+<script src="/static/js/changeonglet.js"></script>
+{% endblock %}
+
 {% block content %}
 <div class="chartpie"> 
   <span class="titre">Number of stories per dataset</span>
@@ -12,13 +16,13 @@
 </div>
 <div class="histograms">
   <div id="mes_onglets">
-    <span onclick="changeOnglet(this);" class="mon_onglet_selected" id="o_1">Tab 1 </span> 
-    <span onclick="changeOnglet(this);" class="mon_onglet" id="o_2">Tab 2 </span> 
+    <span onclick="changeOnglet(this);" class="mon_onglet_selected" id="o_1">Separated histograms </span> 
+    <span onclick="changeOnglet(this);" class="mon_onglet" id="o_2">Stacked histogram </span> 
   </div>
   <div class="clear">
     <div id="mes_contenus">
       <div class="mon_contenu" id="co_1">
-        <div>
+        <div class="row">
           <div>
             <span class="titre">Total</span>
             <br />
@@ -30,7 +34,7 @@
             <img src="/plot_histo_train.png" alt="train data histogram" />
           </div>
         </div>
-        <div>
+        <div class="row">
           <div>
             <span class="titre">Validation</span>
             <br />
@@ -43,7 +47,7 @@
           </div>
         </div>
       </div>
-      <div class="mon_contenu" id="co_2">
+      <div class="mon_contenu" id="co_2" style="display: none;" >
         <span class="titre">Train</span>
         <br />
         <img src="/plot_stacked.png" alt="complete dataset stacked histogram" />
