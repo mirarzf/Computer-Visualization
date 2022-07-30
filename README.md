@@ -12,6 +12,6 @@ python app.py
 ```
 Or use the following commands, as instructed in the [Flask documentation](https://flask.palletsprojects.com/en/2.1.x/cli/): 
 ```
-$ export FLASK_APP=hello
+$ export FLASK_APP=app
 $ flask run
 ```
