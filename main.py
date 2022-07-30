@@ -63,31 +63,55 @@ def pie_chart():
 # plt.show()
 
 # Second: Histogram showing the distribution of number of threads per story in each split
-# splits = ["train", "val", "test"]
-# fig = plt.figure()
-# fig.set_tight_layout(True)
-# ax = fig.subplots(nrows = len(splits)+1, ncols = 1)
-# for i in range(len(splits)): 
-#     split = splits[i]
-#     current_ax = ax[i]
-#     df[df["split"] == split].hist(column=["nb_of_threads"], ax = current_ax, grid = False)
-#     ax[i].set_title(split)
-
-# current_ax = ax[-1]
-# df.hist(column=["nb_of_threads"], ax = current_ax, grid = False)
-# current_ax.set_title("Complete dataset")
 
 def histo_split(split = "total"): 
     fig = Figure()
     ax = fig.subplots(nrows = 1, ncols = 1)
-    # split = splits[i]
     if split == "total": 
-        df.hist(column=["nb_of_threads"], ax = ax, grid = False)
+        maximum = max(df["nb_of_threads"])
+        minimum = min(df["nb_of_threads"])
+        somme = sum(df["nb_of_threads"])
+        mean = somme/len(df["nb_of_threads"])
+        bins = [i+0.5 for i in range(minimum-1, maximum+1)]
+        df.hist(column=["nb_of_threads"], bins = bins, ax = ax, grid = False, edgecolor = '#666', color='#888')
+        ax.axvline(mean, color="#222", label="Average number of threads in a story")
     else: 
-        df[df["split"] == split].hist(column=["nb_of_threads"], ax = ax, grid = False)
-    ax.set_title("")
+        maximum = max(df[df["split"] == split]["nb_of_threads"])
+        minimum = min(df[df["split"] == split]["nb_of_threads"])
+        somme = sum(df[df["split"] == split]["nb_of_threads"])
+        mean = somme/len(df[df["split"] == split]["nb_of_threads"])
+        bins = [i+0.5 for i in range(minimum-1, maximum+1)]
+        df[df["split"] == split].hist(column=["nb_of_threads"], bins = bins, ax = ax, grid = False, edgecolor = '#666', color='#888')
+        ax.axvline(mean, color="#222", label="Average number of threads in a story")
+    ax.set_title("Repartition of number of threads in a story")
+    ax.set_xticks(range(minimum, maximum+1))
+    ax.legend(loc="best")
     return fig 
 
+def histo_split_stacked(): 
+    fig = Figure()
+    ax = fig.subplots(nrows = 1, ncols = 1)
+    splits = ["train", "val", "test"]
+    maximum = max(df["nb_of_threads"])
+    minimum = min(df["nb_of_threads"])
+    somme = sum(df["nb_of_threads"])
+    mean = somme/len(df["nb_of_threads"])
+
+    columns_splits = [df[df["split"] == split]["nb_of_threads"] for split in splits] 
+    
+    bins = [i+0.5 for i in range(minimum-1, maximum+1)]
+    ax.hist(columns_splits, stacked=True, bins = bins, edgecolor = '#666', color = ['#888', '#aaa', '#ccc'], label = splits)
+    ax.axvline(mean, color="#222", label="Average number of threads in a story")
+    ax.set_title("Repartition of number of threads in a story")
+    ax.set_xticks(range(minimum, maximum+1))
+    ax.legend(loc="best")
+    return fig 
+
+# histo_split()
+# histo_split('train')
+# histo_split('val')
+# histo_split('test')
+# histo_split_stacked()
 # plt.show()
 
 ## TIMELINE PER VIDEO 
@@ -126,26 +150,29 @@ df_stories["story"] = stories
 df_stories["facecolors"] = facecolors 
 
 
-def show_stories_from_video(video_name = None): 
-    if video_name == None: 
-        video_name = "P01_09"
-    
+def show_stories_from_video(video_name = "P01_09"):     
     datarow = df_stories.loc[df_stories["video_id"] == video_name]
     story = datarow["story"].iloc[0]
-    print(len(story))
 
-    fig = plt.figure(figsize=(5,2))
+    fig = plt.Figure()
     ax = fig.subplots(nrows = 1, ncols = 1)
     ax.broken_barh(story, (0, 2), facecolors = tuple(df_stories["facecolors"].iloc[0])) 
     ax.set_yticks([1], labels = [datarow["video_id"].iloc[0]])
     ax.set_ylim(0, 2)
     
-    # plt.show()
-    plt.savefig(os.path.join("static", "plot_timeline_videoidselected.png"))
     return fig 
-    
-show_stories_from_video("P37_102")
+
+def individual_info_from_video(video_name = "P01_09"): 
+    datarow = df_stories.loc[df_stories["video_id"] == video_name]
+    story = datarow["story"].iloc[0]
+
+    nb_of_stories = len(df[df["video_id"] == video_name])
+    nb_of_threads = len(story)
+    return nb_of_stories, nb_of_threads
+
+# show_stories_from_video()
 # plt.show()
+
 
 def show_timeline(story_id = None): 
     fig = Figure(figsize = (5,2)) 
@@ -163,10 +190,12 @@ def show_timeline(story_id = None):
         xranges += new_xrange
         color = np.random.rand(1, 3)
         facecolors += [color] * len(new_xrange)
-    # plt.broken_barh(xranges, (0, 10), facecolors = tuple(facecolors)) 
-    # plt.set_yticks([5], labels = [df.iloc[i]["video_id"]])
-    # plt.set_xticks([], labels = []) 
+        
     ax.broken_barh(xranges, (0, 10), facecolors = tuple(facecolors)) 
     ax.set_yticks([5], labels = [row["video_id"]])
     ax.set_xticks([], labels = []) 
     return fig 
+
+def getListOfVideosIn(split): 
+    ret = df[df["split"] == split]["video_id"].unique()
+    return list(ret)

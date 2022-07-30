@@ -19,8 +19,7 @@ function changeOnglet(_this){
 function showSelectedIndex(_this){ 
     var sb = document.getElementById('select_list'); 
     // show the selected index
-    if (sb.selectedIndex != 0){
-        alert(sb.selectedIndex-1);
-    }
-    document.getElementById('video_id_sel_iframe').contentWindow.location.reload();
+    // if (sb.selectedIndex != 0){
+    //     alert(sb.selectedIndex-1);
+    // }
 }

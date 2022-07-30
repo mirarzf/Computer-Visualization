@@ -5,7 +5,7 @@ from flask import Response
 from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
 from matplotlib.figure import Figure
 
-from main import pie_chart, histo_split, show_stories_from_video, show_timeline
+from main import pie_chart, histo_split, histo_split_stacked, show_stories_from_video, individual_info_from_video, getListOfVideosIn
 
 app = Flask(__name__)
 
@@ -17,17 +17,15 @@ selected_list = ["P37_102", "P01_09"]
 @app.route("/", methods=['GET', 'POST'])
 def main():
 	return render_template("completedataset.html") 
-                        #    video_ids_list = selected_list, 
-                        #    videoidselected = "P01_09")
-
 @app.route("/<split>")
 def rendersplitlink(split): 
     if split == "total": 
-        return redirect(url_for('main'))  
+        return redirect(url_for('main')) 
     else: 
-        # urlofnextpage = split + ".html"
+        selected_list = getListOfVideosIn(split)
         return render_template("splitdataset.html", 
-                                split = split)
+                                split = split, 
+                                video_ids_list = selected_list)
 
 """ PLOT FOR COMPLETE DATASET PAGE """
 @app.route('/plot_pie_chart.png')
@@ -44,50 +42,43 @@ def plot_histo(split):
     FigureCanvas(fig).print_png(output)
     return Response(output.getvalue(), mimetype='image/png')
 
-
-@app.route('/plot_stories.png')
-def plot_stories():
-    fig = show_stories_from_video()
+@app.route('/plot_stacked.png')
+def plot_histo_stacked():
+    fig = histo_split_stacked()
     output = io.BytesIO()
     FigureCanvas(fig).print_png(output)
     return Response(output.getvalue(), mimetype='image/png')
 
-# @app.route('/selectlist', methods = ['POST', 'GET'])
-# def login():
-#     if request.method == 'GET':
-#       video_id_selected = request.args.get('video_id_sl')
-#       return redirect(url_for('success', name = video_id_selected))
-#     else: 
-#       video_id_selected = request.form['video_id_sl']
-#       return redirect(url_for('success', name = video_id_selected))
+""" FUNCTIONS FOR SPLIT DATASET PAGE """
 
-# @app.route('/plot_timeline_videoidselected.png')
-def success(videoidselected):
-    fig = show_stories_from_video(videoidselected)
-    output = io.BytesIO()
-    FigureCanvas(fig).print_png(output)
-    return Response(output.getvalue(), mimetype='image/png')
-
-@app.route('/<split>/selected_video_story/<videoidselected>', methods = ['POST', 'GET'])
-def main_selected_vid_iframe(split, videoidselected): 
-    show_stories_from_video()
-    return render_template("selected_video_story.html", 
+@app.route('/<split>/<selected_video>')
+def rendersplitlinkwithvideo(split, selected_video): 
+    selected_list = getListOfVideosIn(split)
+    nb_of_stories, nb_of_threads = individual_info_from_video(selected_video)
+    return render_template("splitdataset.html", 
                             split = split, 
-                            videoidselected = videoidselected)
+                            video_ids_list = selected_list, 
+                            selected_video = selected_video, 
+                            nb_of_stories = nb_of_stories, 
+                            nb_of_threads = nb_of_threads)
 
-@app.route('/selectlist', methods = ['POST', 'GET'])
-def showSelectedVideo():
+@app.route('/<split>/selected_video_story', methods = ['POST', 'GET'])
+def showSelectedVideo(split):
     if request.method == 'GET':
       video_id_selected = request.args.get('video_id_sl')
     else: 
       video_id_selected = request.form['video_id_sl']
 
-    # success(videoidselected = video_id_selected)
-    show_stories_from_video(video_name = video_id_selected)
-    send_file(os.path.join("static", "plot_timeline_videoidselected.png"))
-    # return ('', 204)
-    return redirect(url_for('main_selected_video_story', videoidselected = video_id_selected))
+    return redirect(url_for('rendersplitlinkwithvideo', 
+                            split = split, 
+                            selected_video = video_id_selected))
 
+@app.route('/plot_timeline_<selectedvideo>.png')
+def plot_stories(selectedvideo):
+    fig = show_stories_from_video(selectedvideo)
+    output = io.BytesIO()
+    FigureCanvas(fig).print_png(output)
+    return Response(output.getvalue(), mimetype='image/png')
 
 if __name__ == "__main__":
     app.run()

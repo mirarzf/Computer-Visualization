@@ -1,11 +1,42 @@
 {% extends 'baselayout.html' %}
 
 {% block additional_css %}
-<link href="/static/css/completedataset.css" rel="stylesheet" />
+<link href="/static/css/splitdataset.css" rel="stylesheet" />
 {% endblock %}
 
 {% block content %}
-  <div class="histograms">
-    BLOP
+<div class="selectlist">
+  <p class="split_info">
+    Number of videos in the split: {{ video_ids_list|length }} <br /> 
+  </p>
+  <div>    
+    <img src="/plot_histo_{{ split }}.png" alt="{{ split }} data histogram" />
   </div>
+  <form action = "/{{split}}/selected_video_story" method ="post" id="sl_timeline_form"> 
+    <select name="video_id_sl" width="300px" id="select_list">
+      <option DISABLED SELECTED>Choose the video ID</option>
+      {% for video_id in video_ids_list %}
+      <option value="{{ video_id }}">{{ video_id }}</option>
+      {% endfor %}
+    </select>
+    <button onclick="showSelectedIndex(this)" id="select_btn">Get the Selected Index</button>
+  </form>
+</div>
+<div class="video_info">
+  {% if selected_video %}
+  <div class="display_timeline">
+    <span class="titre">{{selected_video}}</span>
+    <br />
+    <img src="/plot_timeline_{{ selected_video }}.png" alt="Timeline of annotated data of {{selected_video}}" />
+  </div>
+  <div class="individual_info">
+    <p>
+      Video id: {{ selected_video }} <br /> 
+      Number of stories: {{ nb_of_stories }} <br /> 
+      Number of different threads: {{ nb_of_threads }} <br /> 
+      Split: {{ split }} <br /> 
+    </p>
+  </div>
+  {% endif %}
+</div>
 {% endblock %}

@@ -11,28 +11,43 @@
   <img src="/plot_pie_chart.png" alt="repartition of stories in the dataset" />
 </div>
 <div class="histograms">
-  <div>
-    <div>
-      <span class="titre">Total</span>
-      <br />
-      <img src="/plot_histo_total.png" alt="complete dataset histogram" />
-    </div>
-    <div>
-      <span class="titre">Train</span>
-      <br />
-      <img src="/plot_histo_train.png" alt="train data histogram" />
-    </div>
+  <div id="mes_onglets">
+    <span onclick="changeOnglet(this);" class="mon_onglet_selected" id="o_1">Tab 1 </span> 
+    <span onclick="changeOnglet(this);" class="mon_onglet" id="o_2">Tab 2 </span> 
   </div>
-  <div>
-    <div>
-      <span class="titre">Validation</span>
-      <br />
-      <img src="/plot_histo_val.png" alt="validation data histogram" />
-    </div>
-    <div>
-      <span class="titre">Test </span>
-      <br />
-      <img src="/plot_histo_test.png" alt="test data histogram" />
+  <div class="clear">
+    <div id="mes_contenus">
+      <div class="mon_contenu" id="co_1">
+        <div>
+          <div>
+            <span class="titre">Total</span>
+            <br />
+            <img src="/plot_histo_total.png" alt="complete dataset histogram" />
+          </div>
+          <div>
+            <span class="titre">Train</span>
+            <br />
+            <img src="/plot_histo_train.png" alt="train data histogram" />
+          </div>
+        </div>
+        <div>
+          <div>
+            <span class="titre">Validation</span>
+            <br />
+            <img src="/plot_histo_val.png" alt="validation data histogram" />
+          </div>
+          <div>
+            <span class="titre">Test </span>
+            <br />
+            <img src="/plot_histo_test.png" alt="test data histogram" />
+          </div>
+        </div>
+      </div>
+      <div class="mon_contenu" id="co_2">
+        <span class="titre">Train</span>
+        <br />
+        <img src="/plot_stacked.png" alt="complete dataset stacked histogram" />
+      </div>
     </div>
   </div>
 </div>
