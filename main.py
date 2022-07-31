@@ -107,10 +107,11 @@ df_video_gps = df.groupby(by = ["video_id"]).groups
 stories = []
 facecolors = []
 video_names = [] 
-counter = 0 
+counter_thread = []
 for video in df_video_gps: 
     story = [] 
     threadcolors = []
+    counter = 0
     for ind, row in df[df["video_id"] == video].iterrows(): 
         for j in range(row["nb_of_threads"]): 
             clips = row["clip_frame_idxs"][j]
@@ -118,14 +119,17 @@ for video in df_video_gps:
             story += new_xrange
             color = np.random.rand(1, 3)
             threadcolors += [color] * len(new_xrange)
+            counter += 1
     stories.append(story)
     facecolors.append(threadcolors)
     video_names.append(video)
+    counter_thread.append(counter)
 
 df_stories = pd.DataFrame()
 df_stories["video_id"] = video_names
 df_stories["story"] = stories
 df_stories["facecolors"] = facecolors 
+df_stories["total_nb_of_threads"] = counter_thread
 
 
 def show_stories_from_video(video_name = "P01_09"):     
@@ -138,6 +142,7 @@ def show_stories_from_video(video_name = "P01_09"):
     ax.set_yticks([], labels = [])
     ax.set_ylim(0, 2)
     ax.set_xlim(left = 0)
+    ax.set_xlabel("Frame indices")
     
     return fig 
 
@@ -146,7 +151,7 @@ def individual_info_from_video(video_name = "P01_09"):
     story = datarow["story"].iloc[0]
 
     nb_of_stories = len(df[df["video_id"] == video_name])
-    nb_of_threads = len(story)
+    nb_of_threads = datarow["total_nb_of_threads"].iloc[0]
     return nb_of_stories, nb_of_threads
 
 def show_timeline(story_id = None): 
