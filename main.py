@@ -106,7 +106,7 @@ df_video_gps = df.groupby(by = ["video_id"]).groups
 
 stories = []
 color_choices = np.array([[0,0,0],[255,255,255]])
-n_colorvalue = 10 
+n_colorvalue = 5
 colorvalue = np.linspace(0, 1, num = n_colorvalue)
 color_choices = np.array([[colorvalue], [colorvalue], [colorvalue]])
 color_choices = []
