@@ -105,14 +105,26 @@ def histo_split_stacked():
 df_video_gps = df.groupby(by = ["video_id"]).groups
 
 stories = []
+color_choices = np.array([[0,0,0],[255,255,255]])
+n_colorvalue = 10 
+colorvalue = np.linspace(0, 1, num = n_colorvalue)
+color_choices = np.array([[colorvalue], [colorvalue], [colorvalue]])
+color_choices = []
+for i in range(n_colorvalue): 
+    for j in range(n_colorvalue): 
+        for k in range(n_colorvalue): 
+            color_choices.append((colorvalue[i], colorvalue[j], colorvalue[k]))
 facecolors = []
 video_names = [] 
 counter_thread = []
+
+
 for video in df_video_gps: 
     story = [] 
     threadcolors = []
     n_diff_threads = df[df["video_id"] == video]["nb_of_threads"].sum()
-    colors = [np.random.rand(1,3) for j in range(n_diff_threads)]
+    colors = [color_choices[idx] for idx in np.random.choice(n_colorvalue**3,n_diff_threads)]
+    print(colors)
     counter = 0
     for ind, row in df[df["video_id"] == video].iterrows(): 
         for j in range(row["nb_of_threads"]): 
