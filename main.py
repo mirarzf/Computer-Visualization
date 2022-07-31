@@ -141,14 +141,13 @@ def show_stories_from_video(video_name = "P01_09"):
     ax.broken_barh(story, (0, 2), facecolors = tuple(df_stories["facecolors"].iloc[0])) 
     ax.set_yticks([], labels = [])
     ax.set_ylim(0, 2)
-    ax.set_xlim(left = 0)
+    ax.set_xlim(left = max(0, min([e[0] for e in story])))
     ax.set_xlabel("Frame indices")
     
     return fig 
 
 def individual_info_from_video(video_name = "P01_09"): 
     datarow = df_stories.loc[df_stories["video_id"] == video_name]
-    story = datarow["story"].iloc[0]
 
     nb_of_stories = len(df[df["video_id"] == video_name])
     nb_of_threads = datarow["total_nb_of_threads"].iloc[0]
