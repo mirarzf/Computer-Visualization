@@ -111,13 +111,15 @@ counter_thread = []
 for video in df_video_gps: 
     story = [] 
     threadcolors = []
+    n_diff_threads = df[df["video_id"] == video]["nb_of_threads"].sum()
+    colors = [np.random.rand(1,3) for j in range(n_diff_threads)]
     counter = 0
     for ind, row in df[df["video_id"] == video].iterrows(): 
         for j in range(row["nb_of_threads"]): 
             clips = row["clip_frame_idxs"][j]
             new_xrange = [(clip[0], clip[-1]-clip[0]) for clip in clips]
             story += new_xrange
-            color = np.random.rand(1, 3)
+            color = colors[counter]
             threadcolors += [color] * len(new_xrange)
             counter += 1
     stories.append(story)
