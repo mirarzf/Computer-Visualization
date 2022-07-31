@@ -124,7 +124,6 @@ for video in df_video_gps:
     threadcolors = []
     n_diff_threads = df[df["video_id"] == video]["nb_of_threads"].sum()
     colors = [color_choices[idx] for idx in np.random.choice(n_colorvalue**3,n_diff_threads)]
-    print(colors)
     counter = 0
     for ind, row in df[df["video_id"] == video].iterrows(): 
         for j in range(row["nb_of_threads"]): 
